@@ -1,0 +1,62 @@
+import { FinanceService } from './finance.service';
+import { CreateTransactionDto } from './dto/create-transaction.dto';
+export declare class FinanceController {
+    private readonly financeService;
+    constructor(financeService: FinanceService);
+    create(user: any, dto: CreateTransactionDto): Promise<{
+        type: import("@prisma/client").$Enums.FinanceTransactionType;
+        description: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        notes: string | null;
+        familyMemberId: string | null;
+        userId: string;
+        date: Date;
+        amount: import("@prisma/client/runtime/library").Decimal;
+        currency: string;
+        category: string;
+        relatedBillId: string | null;
+    }>;
+    findAll(user: any): Promise<({
+        familyMember: {
+            emergencyContact: string | null;
+            email: string | null;
+            fullName: string;
+            phone: string | null;
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            relation: import("@prisma/client").$Enums.RelationType;
+            gender: import("@prisma/client").$Enums.Gender;
+            dateOfBirth: Date | null;
+            bloodGroup: import("@prisma/client").$Enums.BloodGroup;
+            address: string | null;
+            notes: string | null;
+            familyGroupId: string;
+            ownerUserId: string;
+        } | null;
+    } & {
+        type: import("@prisma/client").$Enums.FinanceTransactionType;
+        description: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        notes: string | null;
+        familyMemberId: string | null;
+        userId: string;
+        date: Date;
+        amount: import("@prisma/client/runtime/library").Decimal;
+        currency: string;
+        category: string;
+        relatedBillId: string | null;
+    })[]>;
+    monthly(user: any, year?: string, month?: string): Promise<{
+        year: number;
+        month: number;
+        income: number;
+        expense: number;
+        net: number;
+        currency: string;
+    }>;
+}

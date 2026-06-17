@@ -1,0 +1,167 @@
+import { PrismaService } from '../../prisma/prisma.service';
+import { CreateCareerGoalDto } from './dto/create-career-goal.dto';
+import { CreateJobApplicationDto } from './dto/create-job-application.dto';
+export declare class CareerService {
+    private prisma;
+    constructor(prisma: PrismaService);
+    createGoal(userId: string, dto: CreateCareerGoalDto): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        notes: string | null;
+        familyMemberId: string | null;
+        userId: string;
+        roadmap: import("@prisma/client/runtime/library").JsonValue | null;
+        targetRole: string;
+        targetCompany: string | null;
+        salaryGoal: import("@prisma/client/runtime/library").Decimal | null;
+        skills: string[];
+        currentSkills: string[];
+        targetDate: Date | null;
+    }>;
+    getGoals(userId: string): Promise<({
+        familyMember: {
+            fullName: string;
+            id: string;
+        } | null;
+        jobApplications: {
+            id: string;
+            role: string;
+            createdAt: Date;
+            updatedAt: Date;
+            notes: string | null;
+            status: import("@prisma/client").$Enums.JobApplicationStatus;
+            userId: string;
+            careerGoalId: string | null;
+            company: string;
+            appliedDate: Date;
+            interviewDate: Date | null;
+            salaryOffered: import("@prisma/client/runtime/library").Decimal | null;
+            jobUrl: string | null;
+            resumeFileId: string | null;
+        }[];
+    } & {
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        notes: string | null;
+        familyMemberId: string | null;
+        userId: string;
+        roadmap: import("@prisma/client/runtime/library").JsonValue | null;
+        targetRole: string;
+        targetCompany: string | null;
+        salaryGoal: import("@prisma/client/runtime/library").Decimal | null;
+        skills: string[];
+        currentSkills: string[];
+        targetDate: Date | null;
+    })[]>;
+    updateGoal(userId: string, id: string, dto: Partial<CreateCareerGoalDto>): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        notes: string | null;
+        familyMemberId: string | null;
+        userId: string;
+        roadmap: import("@prisma/client/runtime/library").JsonValue | null;
+        targetRole: string;
+        targetCompany: string | null;
+        salaryGoal: import("@prisma/client/runtime/library").Decimal | null;
+        skills: string[];
+        currentSkills: string[];
+        targetDate: Date | null;
+    }>;
+    deleteGoal(userId: string, id: string): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        notes: string | null;
+        familyMemberId: string | null;
+        userId: string;
+        roadmap: import("@prisma/client/runtime/library").JsonValue | null;
+        targetRole: string;
+        targetCompany: string | null;
+        salaryGoal: import("@prisma/client/runtime/library").Decimal | null;
+        skills: string[];
+        currentSkills: string[];
+        targetDate: Date | null;
+    }>;
+    private findGoal;
+    createApplication(userId: string, dto: CreateJobApplicationDto): Promise<{
+        id: string;
+        role: string;
+        createdAt: Date;
+        updatedAt: Date;
+        notes: string | null;
+        status: import("@prisma/client").$Enums.JobApplicationStatus;
+        userId: string;
+        careerGoalId: string | null;
+        company: string;
+        appliedDate: Date;
+        interviewDate: Date | null;
+        salaryOffered: import("@prisma/client/runtime/library").Decimal | null;
+        jobUrl: string | null;
+        resumeFileId: string | null;
+    }>;
+    getApplications(userId: string, goalId?: string): Promise<{
+        id: string;
+        role: string;
+        createdAt: Date;
+        updatedAt: Date;
+        notes: string | null;
+        status: import("@prisma/client").$Enums.JobApplicationStatus;
+        userId: string;
+        careerGoalId: string | null;
+        company: string;
+        appliedDate: Date;
+        interviewDate: Date | null;
+        salaryOffered: import("@prisma/client/runtime/library").Decimal | null;
+        jobUrl: string | null;
+        resumeFileId: string | null;
+    }[]>;
+    updateApplicationStatus(userId: string, id: string, status: string, interviewDate?: string): Promise<{
+        id: string;
+        role: string;
+        createdAt: Date;
+        updatedAt: Date;
+        notes: string | null;
+        status: import("@prisma/client").$Enums.JobApplicationStatus;
+        userId: string;
+        careerGoalId: string | null;
+        company: string;
+        appliedDate: Date;
+        interviewDate: Date | null;
+        salaryOffered: import("@prisma/client/runtime/library").Decimal | null;
+        jobUrl: string | null;
+        resumeFileId: string | null;
+    }>;
+    generateRoadmap(userId: string, goalId: string): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        notes: string | null;
+        familyMemberId: string | null;
+        userId: string;
+        roadmap: import("@prisma/client/runtime/library").JsonValue | null;
+        targetRole: string;
+        targetCompany: string | null;
+        salaryGoal: import("@prisma/client/runtime/library").Decimal | null;
+        skills: string[];
+        currentSkills: string[];
+        targetDate: Date | null;
+    }>;
+    analyzeSkills(userId: string, goalId: string): Promise<{
+        currentSkills: string[];
+        targetSkills: string[];
+        matchPercentage: number;
+        gaps: string[];
+        suggestions: string[];
+    }>;
+    generateCV(userId: string, goalId: string, extraData?: any): Promise<{
+        summary: string;
+        skills: string[];
+        targetRole: string;
+        experience: any;
+        education: any;
+        generatedFor: string;
+    }>;
+}

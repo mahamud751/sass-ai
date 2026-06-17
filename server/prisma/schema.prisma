@@ -1,0 +1,708 @@
+// LifeMate AI - Production Prisma Schema
+// Comprehensive data model for all-in-one life assistant
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// ENUMS
+// ============================================
+
+enum UserRole {
+  USER
+  FAMILY_ADMIN
+}
+
+enum RelationType {
+  SELF
+  MOTHER
+  FATHER
+  BROTHER
+  SISTER
+  WIFE
+  HUSBAND
+  CHILD
+  OTHER
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+  UNKNOWN
+}
+
+enum BloodGroup {
+  A_POSITIVE
+  A_NEGATIVE
+  B_POSITIVE
+  B_NEGATIVE
+  AB_POSITIVE
+  AB_NEGATIVE
+  O_POSITIVE
+  O_NEGATIVE
+  UNKNOWN
+}
+
+enum MedicineInstruction {
+  BEFORE_MEAL
+  AFTER_MEAL
+  WITH_MEAL
+  EMPTY_STOMACH
+  CUSTOM
+}
+
+enum ReminderFrequency {
+  DAILY
+  WEEKLY
+  CUSTOM
+  AS_NEEDED
+}
+
+enum MedicineLogStatus {
+  TAKEN
+  SKIPPED
+  MISSED
+}
+
+enum HealthRecordType {
+  PRESCRIPTION
+  BLOOD_TEST
+  DOCTOR_VISIT
+  DIAGNOSIS
+  ALLERGY
+  VACCINE
+  LAB_REPORT
+  IMAGING
+  PREGNANCY
+  PRENATAL_VISIT
+  MENSTRUAL
+  GROWTH
+  IMMUNIZATION
+  OTHER
+}
+
+enum DocumentType {
+  NID
+  PASSPORT
+  BIRTH_CERTIFICATE
+  MEDICAL
+  EDUCATION_CERTIFICATE
+  JOB_CERTIFICATE
+  BANK
+  INSURANCE
+  TAX
+  VISA
+  TRAVEL
+  PROPERTY
+  ULTRASOUND
+  PRENATAL_REPORT
+  VACCINATION_RECORD
+  BIRTH_RECORD
+  DISCHARGE_SUMMARY
+  OTHER
+}
+
+enum FinanceTransactionType {
+  INCOME
+  EXPENSE
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum JobApplicationStatus {
+  APPLIED
+  INTERVIEW_SCHEDULED
+  INTERVIEWED
+  OFFER_RECEIVED
+  REJECTED
+  ACCEPTED
+  WITHDRAWN
+}
+
+enum NotificationType {
+  MEDICINE_REMINDER
+  TASK_REMINDER
+  BILL_DUE
+  DOCUMENT_EXPIRY
+  IMPORTANT_DATE
+  LOW_STOCK
+  FAMILY_UPDATE
+  AI_SUGGESTION
+  GENERAL
+}
+
+enum AiActionType {
+  CREATE_MEDICINE_REMINDER
+  CREATE_TASK
+  CREATE_EXPENSE
+  CREATE_DOCUMENT_REMINDER
+  SEARCH_DOCUMENT
+  SEARCH_MEDICINE
+  SEARCH_FINANCE
+  SEARCH_HEALTH
+  CREATE_CAREER_PLAN
+  CREATE_LEARNING_PLAN
+  GENERAL_CHAT
+}
+
+enum GoalType {
+  PERSONAL
+  MONEY
+  HEALTH
+  CAREER
+  LEARNING
+  FAMILY
+  OTHER
+}
+
+// ============================================
+// MODELS
+// ============================================
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  password      String
+  fullName      String
+  phone         String?
+  avatarUrl     String?
+  role          UserRole @default(USER)
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  familyGroups       FamilyGroup[]
+  ownedFamilyMembers FamilyMember[]       @relation("FamilyMemberOwner")
+  medicines          Medicine[]
+  healthRecords      HealthRecord[]
+  documents          Document[]
+  financeTransactions FinanceTransaction[]
+  tasks              Task[]
+  careerGoals        CareerGoal[]
+  jobApplications    JobApplication[]
+  learningGoals      LearningGoal[]
+  emergencyContacts  EmergencyContact[]
+  travelPlans        TravelPlan[]
+  importantDates     ImportantDate[]
+  personalMemories   PersonalMemory[]
+  billSubscriptions  BillSubscription[]
+  goals              Goal[]
+  notifications      Notification[]
+  aiChatSessions     AiChatSession[]
+  files              File[]
+  menstrualCycles    MenstrualCycle[]
+  pregnancies        Pregnancy[]
+  immunizations      Immunization[]
+
+  @@index([email])
+}
+
+model FamilyGroup {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  ownerId     String
+  owner       User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  members FamilyMember[]
+
+  @@index([ownerId])
+}
+
+model FamilyMember {
+  id               String       @id @default(uuid())
+  familyGroupId    String
+  familyGroup      FamilyGroup  @relation(fields: [familyGroupId], references: [id], onDelete: Cascade)
+  ownerUserId      String       // Who created/owns this member record
+  ownerUser        User         @relation("FamilyMemberOwner", fields: [ownerUserId], references: [id])
+  fullName         String
+  relation         RelationType
+  gender           Gender       @default(UNKNOWN)
+  dateOfBirth      DateTime?
+  bloodGroup       BloodGroup   @default(UNKNOWN)
+  phone            String?
+  email            String?
+  address          String?
+  emergencyContact String?
+  notes            String?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  // Scoped data for this member
+  medicines     Medicine[]
+  healthRecords HealthRecord[]
+  documents     Document[]
+  tasks         Task[]
+  financeTransactions FinanceTransaction[]
+  importantDates ImportantDate[]
+  personalMemories PersonalMemory[]
+  emergencyContacts EmergencyContact[]
+  menstrualCycles MenstrualCycle[]
+  pregnancies     Pregnancy[]
+  immunizations   Immunization[]
+  careerGoals     CareerGoal[]
+
+  @@index([familyGroupId])
+  @@index([ownerUserId])
+}
+
+model Medicine {
+  id                 String               @id @default(uuid())
+  userId             String
+  user               User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  familyMemberId     String?
+  familyMember       FamilyMember?        @relation(fields: [familyMemberId], references: [id], onDelete: SetNull)
+  name               String
+  dosage             String
+  instruction        MedicineInstruction  @default(AFTER_MEAL)
+  customInstruction  String?
+  startDate          DateTime
+  endDate            DateTime?
+  frequency          ReminderFrequency    @default(DAILY)
+  stockCount         Int?
+  lowStockThreshold  Int?
+  isActive           Boolean              @default(true)
+  notes              String?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+
+  scheduleTimes MedicineScheduleTime[]
+  logs          MedicineLog[]
+
+  @@index([userId])
+  @@index([familyMemberId])
+}
+
+model MedicineScheduleTime {
+  id         String   @id @default(uuid())
+  medicineId String
+  medicine   Medicine @relation(fields: [medicineId], references: [id], onDelete: Cascade)
+  time       String   // "HH:mm" format e.g. "21:00"
+  createdAt  DateTime @default(now())
+
+  @@index([medicineId])
+}
+
+model MedicineLog {
+  id         String             @id @default(uuid())
+  medicineId String
+  medicine   Medicine           @relation(fields: [medicineId], references: [id], onDelete: Cascade)
+  scheduledTime DateTime
+  takenAt    DateTime?
+  status     MedicineLogStatus
+  notes      String?
+  createdAt  DateTime           @default(now())
+
+  @@index([medicineId])
+  @@index([scheduledTime])
+}
+
+model HealthRecord {
+  id             String           @id @default(uuid())
+  userId         String
+  user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  familyMemberId String?
+  familyMember   FamilyMember?    @relation(fields: [familyMemberId], references: [id], onDelete: SetNull)
+  type           HealthRecordType
+  title          String
+  doctorName     String?
+  hospitalName   String?
+  date           DateTime
+  diagnosis      String?
+  notes          String?
+  aiSummary      String?          // AI-generated summary only. NEVER diagnosis.
+  fileIds        String[]         // Array of File IDs
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  @@index([userId])
+  @@index([familyMemberId])
+  @@index([date])
+}
+
+model Document {
+  id             String        @id @default(uuid())
+  userId         String
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  familyMemberId String?
+  familyMember   FamilyMember? @relation(fields: [familyMemberId], references: [id], onDelete: SetNull)
+  type           DocumentType
+  title          String
+  description    String?
+  fileId         String?       // Primary file
+  fileUrl        String?
+  tags           String[]
+  expiryDate     DateTime?
+  secureNotes    String?       // Encrypted/sensitive notes field
+  isEncrypted    Boolean       @default(false)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([userId])
+  @@index([familyMemberId])
+  @@index([expiryDate])
+  @@index([type])
+}
+
+model FinanceTransaction {
+  id             String                 @id @default(uuid())
+  userId         String
+  user           User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  familyMemberId String?
+  familyMember   FamilyMember?          @relation(fields: [familyMemberId], references: [id], onDelete: SetNull)
+  type           FinanceTransactionType
+  amount         Decimal                @db.Decimal(12, 2)
+  currency       String                 @default("BDT")
+  category       String
+  description    String
+  date           DateTime
+  relatedBillId  String?
+  notes          String?
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+
+  @@index([userId])
+  @@index([familyMemberId])
+  @@index([date])
+  @@index([type])
+}
+
+model Task {
+  id             String     @id @default(uuid())
+  userId         String
+  user           User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  familyMemberId String?
+  familyMember   FamilyMember? @relation(fields: [familyMemberId], references: [id], onDelete: SetNull)
+  title          String
+  description    String?
+  priority       TaskPriority @default(MEDIUM)
+  status         TaskStatus   @default(PENDING)
+  dueDate        DateTime?
+  isRecurring    Boolean      @default(false)
+  recurrenceRule String?      // e.g. "FREQ=DAILY"
+  completedAt    DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@index([userId])
+  @@index([familyMemberId])
+  @@index([status])
+  @@index([dueDate])
+}
+
+model CareerGoal {
+  id              String   @id @default(uuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  familyMemberId  String?
+  familyMember    FamilyMember? @relation(fields: [familyMemberId], references: [id], onDelete: SetNull)
+  targetRole      String
+  targetCompany   String?
+  salaryGoal      Decimal? @db.Decimal(12, 2)
+  skills          String[]
+  currentSkills   String[]
+  roadmap         Json?    // Structured plan
+  notes           String?
+  targetDate      DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  jobApplications JobApplication[]
+
+  @@index([userId])
+  @@index([familyMemberId])
+}
+
+model JobApplication {
+  id             String              @id @default(uuid())
+  userId         String
+  user           User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  careerGoalId   String?
+  careerGoal     CareerGoal?         @relation(fields: [careerGoalId], references: [id])
+  company        String
+  role           String
+  status         JobApplicationStatus @default(APPLIED)
+  appliedDate    DateTime
+  interviewDate  DateTime?
+  salaryOffered  Decimal?            @db.Decimal(12, 2)
+  notes          String?
+  jobUrl         String?
+  resumeFileId   String?
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+
+  @@index([userId])
+  @@index([status])
+}
+
+model LearningGoal {
+  id           String   @id @default(uuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title        String
+  description  String?
+  skillArea    String?
+  progress     Int      @default(0) // 0-100
+  roadmap      Json?
+  notes        String?
+  targetDate   DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model EmergencyContact {
+  id             String   @id @default(uuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  familyMemberId String?
+  familyMember   FamilyMember? @relation(fields: [familyMemberId], references: [id], onDelete: SetNull)
+  name           String
+  relation       String
+  phone          String
+  email          String?
+  address        String?
+  isPrimary      Boolean  @default(false)
+  notes          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model TravelPlan {
+  id           String   @id @default(uuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title        String
+  destination  String
+  startDate    DateTime?
+  endDate      DateTime?
+  budget       Decimal? @db.Decimal(12, 2)
+  currency     String   @default("BDT")
+  checklist    Json?    // Array of {item, done}
+  notes        String?
+  documentIds  String[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model ImportantDate {
+  id             String   @id @default(uuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  familyMemberId String?
+  familyMember   FamilyMember? @relation(fields: [familyMemberId], references: [id], onDelete: SetNull)
+  title          String
+  date           DateTime
+  type           String   // BIRTHDAY, ANNIVERSARY, EXPIRY, APPOINTMENT, BILL, OTHER
+  recurring      Boolean  @default(false)
+  reminderDays   Int      @default(7)
+  notes          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([userId])
+  @@index([date])
+}
+
+model PersonalMemory {
+  id             String   @id @default(uuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  familyMemberId String?
+  familyMember   FamilyMember? @relation(fields: [familyMemberId], references: [id], onDelete: SetNull)
+  title          String
+  content        String
+  tags           String[]
+  voiceNoteUrl   String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model BillSubscription {
+  id            String   @id @default(uuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name          String
+  amount        Decimal  @db.Decimal(12, 2)
+  currency      String   @default("BDT")
+  category      String   // RENT, ELECTRICITY, INTERNET, NETFLIX, MOBILE, etc.
+  dueDate       DateTime
+  isRecurring   Boolean  @default(true)
+  frequency     String   @default("MONTHLY")
+  isPaid        Boolean  @default(false)
+  lastPaidDate  DateTime?
+  reminderDays  Int      @default(3)
+  notes         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([userId])
+  @@index([dueDate])
+}
+
+model Goal {
+  id          String    @id @default(uuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        GoalType
+  title       String
+  description String?
+  targetValue Decimal?  @db.Decimal(12, 2)
+  currentValue Decimal? @db.Decimal(12, 2)
+  unit        String?
+  progress    Int       @default(0) // 0-100
+  milestones  Json?
+  dueDate     DateTime?
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([userId])
+}
+
+model Notification {
+  id        String           @id @default(uuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      NotificationType
+  title     String
+  message   String
+  data      Json?
+  isRead    Boolean          @default(false)
+  readAt    DateTime?
+  createdAt DateTime         @default(now())
+
+  @@index([userId])
+  @@index([isRead])
+}
+
+model AiChatSession {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  messages AiChatMessage[]
+
+  @@index([userId])
+}
+
+model AiChatMessage {
+  id        String      @id @default(uuid())
+  sessionId String
+  session   AiChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  role      String      // 'user' | 'assistant' | 'system'
+  content   String
+  action    AiActionType?
+  metadata  Json?
+  createdAt DateTime    @default(now())
+
+  @@index([sessionId])
+}
+
+model File {
+  id           String   @id @default(uuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  originalName String
+  filename     String
+  mimetype     String
+  size         Int
+  path         String   // Relative or absolute storage path
+  url          String?
+  createdAt    DateTime @default(now())
+
+  @@index([userId])
+}
+
+model MenstrualCycle {
+  id             String        @id @default(uuid())
+  userId         String
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  familyMemberId String?
+  familyMember   FamilyMember? @relation(fields: [familyMemberId], references: [id], onDelete: SetNull)
+  startDate      DateTime
+  endDate        DateTime?
+  cycleLength    Int?          // in days
+  flow           String?       // LIGHT | MEDIUM | HEAVY
+  symptoms       String[]      // e.g. cramps, headache, mood
+  notes          String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([userId])
+  @@index([familyMemberId])
+  @@index([startDate])
+}
+
+model Pregnancy {
+  id             String        @id @default(uuid())
+  userId         String
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  familyMemberId String
+  familyMember   FamilyMember  @relation(fields: [familyMemberId], references: [id], onDelete: Cascade)
+  lmpDate        DateTime?     // Last menstrual period date
+  conceptionDate DateTime?
+  dueDate        DateTime
+  status         String        @default("ACTIVE") // ACTIVE | DELIVERED | LOST
+  notes          String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([userId])
+  @@index([familyMemberId])
+  @@index([dueDate])
+}
+
+model Immunization {
+  id               String        @id @default(uuid())
+  userId           String
+  user             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  familyMemberId   String
+  familyMember     FamilyMember  @relation(fields: [familyMemberId], references: [id], onDelete: Cascade)
+  vaccineName      String        // e.g. BCG, Polio 1, DPT 1, Hep B, Measles, etc. ("Tika")
+  scheduledDate    DateTime
+  administeredDate DateTime?
+  dose             Int?          @default(1)
+  batchNumber      String?
+  location         String?
+  notes            String?
+  documentId       String?       // optional link to uploaded Document
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  @@index([userId])
+  @@index([familyMemberId])
+  @@index([scheduledDate])
+}

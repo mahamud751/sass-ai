@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: lifemate-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: lifemate
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+
+# Note: This Docker setup uses postgres:postgres user.
+# Your current .env uses pino:2742.
+# If you want to use Docker, either:
+#   1. Change DATABASE_URL to postgresql://postgres:postgres@localhost:5432/lifemate?schema=public
+#   2. Or update the environment values above to match your preferred user.
+
