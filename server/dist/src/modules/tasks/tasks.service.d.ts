@@ -9,9 +9,9 @@ export declare class TasksService {
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        userId: string;
         familyMemberId: string | null;
         status: import("@prisma/client").$Enums.TaskStatus;
-        userId: string;
         priority: import("@prisma/client").$Enums.TaskPriority;
         dueDate: Date | null;
         isRecurring: boolean;
@@ -35,6 +35,7 @@ export declare class TasksService {
             notes: string | null;
             familyGroupId: string;
             ownerUserId: string;
+            linkedUserId: string | null;
         } | null;
     } & {
         description: string | null;
@@ -42,9 +43,9 @@ export declare class TasksService {
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        userId: string;
         familyMemberId: string | null;
         status: import("@prisma/client").$Enums.TaskStatus;
-        userId: string;
         priority: import("@prisma/client").$Enums.TaskPriority;
         dueDate: Date | null;
         isRecurring: boolean;
@@ -68,6 +69,7 @@ export declare class TasksService {
             notes: string | null;
             familyGroupId: string;
             ownerUserId: string;
+            linkedUserId: string | null;
         } | null;
     } & {
         description: string | null;
@@ -75,9 +77,9 @@ export declare class TasksService {
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        userId: string;
         familyMemberId: string | null;
         status: import("@prisma/client").$Enums.TaskStatus;
-        userId: string;
         priority: import("@prisma/client").$Enums.TaskPriority;
         dueDate: Date | null;
         isRecurring: boolean;
@@ -90,9 +92,9 @@ export declare class TasksService {
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        userId: string;
         familyMemberId: string | null;
         status: import("@prisma/client").$Enums.TaskStatus;
-        userId: string;
         priority: import("@prisma/client").$Enums.TaskPriority;
         dueDate: Date | null;
         isRecurring: boolean;

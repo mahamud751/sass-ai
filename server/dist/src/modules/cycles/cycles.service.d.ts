@@ -8,10 +8,10 @@ export declare class CyclesService {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
+        userId: string;
         startDate: Date;
         endDate: Date | null;
         familyMemberId: string | null;
-        userId: string;
         cycleLength: number | null;
         flow: string | null;
         symptoms: string[];
@@ -26,10 +26,10 @@ export declare class CyclesService {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
+        userId: string;
         startDate: Date;
         endDate: Date | null;
         familyMemberId: string | null;
-        userId: string;
         cycleLength: number | null;
         flow: string | null;
         symptoms: string[];

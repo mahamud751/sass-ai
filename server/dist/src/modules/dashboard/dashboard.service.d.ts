@@ -1,18 +1,73 @@
 import { PrismaService } from '../../prisma/prisma.service';
+import { FamilyAccessService } from '../family/family-access.service';
 export declare class DashboardService {
     private prisma;
-    constructor(prisma: PrismaService);
+    private familyAccess;
+    constructor(prisma: PrismaService, familyAccess: FamilyAccessService);
+    private memberVisibilityWhere;
+    getEmergencyOverview(userId: string): Promise<{
+        members: {
+            id: string;
+            fullName: string;
+            relation: import("@prisma/client").$Enums.RelationType;
+            bloodGroup: "A_POSITIVE" | "A_NEGATIVE" | "B_POSITIVE" | "B_NEGATIVE" | "AB_POSITIVE" | "AB_NEGATIVE" | "O_POSITIVE" | "O_NEGATIVE" | null;
+            phone: string | null;
+            emergencyContact: string | null;
+        }[];
+        allergies: {
+            title: string;
+            notes: string | null;
+            for: string;
+        }[];
+        currentMedicines: {
+            name: string;
+            dosage: string;
+            for: string;
+            doctor: string | null;
+        }[];
+        emergencyContacts: {
+            email: string | null;
+            phone: string;
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            name: string;
+            relation: string;
+            address: string | null;
+            notes: string | null;
+            userId: string;
+            familyMemberId: string | null;
+            isPrimary: boolean;
+        }[];
+        recentDoctors: {
+            name: string | null;
+            hospital: string | null;
+            for: string | undefined;
+        }[];
+    }>;
     getDashboard(userId: string): Promise<{
         todayMedicines: number;
+        todayDoseCount: number;
+        pendingDoseCount: number;
         medicinesList: ({
             familyMember: {
                 fullName: string;
+                id: string;
             } | null;
             scheduleTimes: {
                 id: string;
                 createdAt: Date;
                 medicineId: string;
                 time: string;
+            }[];
+            logs: {
+                id: string;
+                createdAt: Date;
+                notes: string | null;
+                status: import("@prisma/client").$Enums.MedicineLogStatus;
+                scheduledTime: Date;
+                takenAt: Date | null;
+                medicineId: string;
             }[];
         } & {
             id: string;
@@ -21,6 +76,7 @@ export declare class DashboardService {
             updatedAt: Date;
             name: string;
             notes: string | null;
+            userId: string;
             dosage: string;
             instruction: import("@prisma/client").$Enums.MedicineInstruction;
             customInstruction: string | null;
@@ -31,8 +87,19 @@ export declare class DashboardService {
             lowStockThreshold: number | null;
             familyMemberId: string | null;
             doctorName: string | null;
-            userId: string;
         })[];
+        todayDoses: {
+            medicineId: string;
+            name: string;
+            dosage: string;
+            time: string;
+            familyMember: {
+                fullName: string;
+                id: string;
+            } | null;
+            doctorName: string | null;
+            status: string;
+        }[];
         pendingTasks: number;
         tasksList: ({
             familyMember: {
@@ -44,9 +111,9 @@ export declare class DashboardService {
             id: string;
             createdAt: Date;
             updatedAt: Date;
+            userId: string;
             familyMemberId: string | null;
             status: import("@prisma/client").$Enums.TaskStatus;
-            userId: string;
             priority: import("@prisma/client").$Enums.TaskPriority;
             dueDate: Date | null;
             isRecurring: boolean;
@@ -66,8 +133,8 @@ export declare class DashboardService {
             createdAt: Date;
             updatedAt: Date;
             notes: string | null;
-            familyMemberId: string | null;
             userId: string;
+            familyMemberId: string | null;
             date: Date;
             recurring: boolean;
             reminderDays: number;
@@ -84,8 +151,8 @@ export declare class DashboardService {
             createdAt: Date;
             updatedAt: Date;
             tags: string[];
-            familyMemberId: string | null;
             userId: string;
+            familyMemberId: string | null;
             fileId: string | null;
             fileUrl: string | null;
             expiryDate: Date | null;
@@ -109,6 +176,7 @@ export declare class DashboardService {
                 notes: string | null;
                 familyGroupId: string;
                 ownerUserId: string;
+                linkedUserId: string | null;
             }[];
         } & {
             description: string | null;
@@ -119,6 +187,10 @@ export declare class DashboardService {
             ownerId: string;
         })[];
         expiringDocumentsCount: number;
+        dueVaccinesCount: number;
+        unreadNotifications: number;
         aiSuggestions: string[];
+        isLinkedMember: boolean;
     }>;
+    private getFamiliesForUser;
 }

@@ -11,4 +11,9 @@ export class LogMedicineDto {
   @IsOptional()
   @IsString()
   notes?: string;
+
+  @ApiPropertyOptional({ description: 'Scheduled time slot HH:mm' })
+  @IsOptional()
+  @IsString()
+  scheduledTime?: string;
 }

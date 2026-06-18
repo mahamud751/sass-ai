@@ -8,8 +8,8 @@ export declare class BillsController {
         updatedAt: Date;
         name: string;
         notes: string | null;
-        frequency: string;
         userId: string;
+        frequency: string;
         dueDate: Date;
         isRecurring: boolean;
         reminderDays: number;
@@ -25,8 +25,8 @@ export declare class BillsController {
         updatedAt: Date;
         name: string;
         notes: string | null;
-        frequency: string;
         userId: string;
+        frequency: string;
         dueDate: Date;
         isRecurring: boolean;
         reminderDays: number;
@@ -42,8 +42,8 @@ export declare class BillsController {
         updatedAt: Date;
         name: string;
         notes: string | null;
-        frequency: string;
         userId: string;
+        frequency: string;
         dueDate: Date;
         isRecurring: boolean;
         reminderDays: number;

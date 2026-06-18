@@ -16,6 +16,7 @@ const client_1 = require("@prisma/client");
 class LogMedicineDto {
     status;
     notes;
+    scheduledTime;
 }
 exports.LogMedicineDto = LogMedicineDto;
 __decorate([
@@ -29,4 +30,10 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], LogMedicineDto.prototype, "notes", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Scheduled time slot HH:mm' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], LogMedicineDto.prototype, "scheduledTime", void 0);
 //# sourceMappingURL=log-medicine.dto.js.map

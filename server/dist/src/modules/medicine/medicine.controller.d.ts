@@ -21,6 +21,7 @@ export declare class MedicineController {
             notes: string | null;
             familyGroupId: string;
             ownerUserId: string;
+            linkedUserId: string | null;
         } | null;
         scheduleTimes: {
             id: string;
@@ -44,6 +45,7 @@ export declare class MedicineController {
         updatedAt: Date;
         name: string;
         notes: string | null;
+        userId: string;
         dosage: string;
         instruction: import("@prisma/client").$Enums.MedicineInstruction;
         customInstruction: string | null;
@@ -54,7 +56,6 @@ export declare class MedicineController {
         lowStockThreshold: number | null;
         familyMemberId: string | null;
         doctorName: string | null;
-        userId: string;
     }>;
     findAll(user: any, familyMemberId?: string): Promise<({
         familyMember: {
@@ -75,6 +76,7 @@ export declare class MedicineController {
         updatedAt: Date;
         name: string;
         notes: string | null;
+        userId: string;
         dosage: string;
         instruction: import("@prisma/client").$Enums.MedicineInstruction;
         customInstruction: string | null;
@@ -85,7 +87,6 @@ export declare class MedicineController {
         lowStockThreshold: number | null;
         familyMemberId: string | null;
         doctorName: string | null;
-        userId: string;
     })[]>;
     findToday(user: any): Promise<({
         familyMember: {
@@ -114,6 +115,7 @@ export declare class MedicineController {
         updatedAt: Date;
         name: string;
         notes: string | null;
+        userId: string;
         dosage: string;
         instruction: import("@prisma/client").$Enums.MedicineInstruction;
         customInstruction: string | null;
@@ -124,7 +126,6 @@ export declare class MedicineController {
         lowStockThreshold: number | null;
         familyMemberId: string | null;
         doctorName: string | null;
-        userId: string;
     })[]>;
     findOne(user: any, id: string): Promise<{
         familyMember: {
@@ -143,6 +144,7 @@ export declare class MedicineController {
             notes: string | null;
             familyGroupId: string;
             ownerUserId: string;
+            linkedUserId: string | null;
         } | null;
         scheduleTimes: {
             id: string;
@@ -166,6 +168,7 @@ export declare class MedicineController {
         updatedAt: Date;
         name: string;
         notes: string | null;
+        userId: string;
         dosage: string;
         instruction: import("@prisma/client").$Enums.MedicineInstruction;
         customInstruction: string | null;
@@ -176,7 +179,6 @@ export declare class MedicineController {
         lowStockThreshold: number | null;
         familyMemberId: string | null;
         doctorName: string | null;
-        userId: string;
     }>;
     log(user: any, id: string, dto: LogMedicineDto): Promise<{
         id: string;

@@ -34,9 +34,9 @@ export declare class PrescriptionsController {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
+        userId: string;
         familyMemberId: string | null;
         doctorName: string | null;
-        userId: string;
         hospitalName: string | null;
         date: Date;
         healthRecordId: string | null;
@@ -73,9 +73,9 @@ export declare class PrescriptionsController {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
+        userId: string;
         familyMemberId: string | null;
         doctorName: string | null;
-        userId: string;
         hospitalName: string | null;
         date: Date;
         healthRecordId: string | null;
@@ -112,9 +112,9 @@ export declare class PrescriptionsController {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
+        userId: string;
         familyMemberId: string | null;
         doctorName: string | null;
-        userId: string;
         hospitalName: string | null;
         date: Date;
         healthRecordId: string | null;
@@ -141,6 +141,7 @@ export declare class PrescriptionsController {
             updatedAt: Date;
             name: string;
             notes: string | null;
+            userId: string;
             dosage: string;
             instruction: import("@prisma/client").$Enums.MedicineInstruction;
             customInstruction: string | null;
@@ -151,7 +152,6 @@ export declare class PrescriptionsController {
             lowStockThreshold: number | null;
             familyMemberId: string | null;
             doctorName: string | null;
-            userId: string;
         }) | null)[];
     }>;
     addMedicineFromItem(user: any, id: string, itemId: string): Promise<({
@@ -172,6 +172,7 @@ export declare class PrescriptionsController {
         updatedAt: Date;
         name: string;
         notes: string | null;
+        userId: string;
         dosage: string;
         instruction: import("@prisma/client").$Enums.MedicineInstruction;
         customInstruction: string | null;
@@ -182,6 +183,5 @@ export declare class PrescriptionsController {
         lowStockThreshold: number | null;
         familyMemberId: string | null;
         doctorName: string | null;
-        userId: string;
     }) | null>;
 }

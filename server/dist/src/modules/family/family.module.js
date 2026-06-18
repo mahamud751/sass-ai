@@ -10,14 +10,15 @@ exports.FamilyModule = void 0;
 const common_1 = require("@nestjs/common");
 const family_service_1 = require("./family.service");
 const family_controller_1 = require("./family.controller");
+const family_access_service_1 = require("./family-access.service");
 let FamilyModule = class FamilyModule {
 };
 exports.FamilyModule = FamilyModule;
 exports.FamilyModule = FamilyModule = __decorate([
     (0, common_1.Module)({
         controllers: [family_controller_1.FamilyController],
-        providers: [family_service_1.FamilyService],
-        exports: [family_service_1.FamilyService],
+        providers: [family_service_1.FamilyService, family_access_service_1.FamilyAccessService],
+        exports: [family_service_1.FamilyService, family_access_service_1.FamilyAccessService],
     })
 ], FamilyModule);
 //# sourceMappingURL=family.module.js.map

@@ -35,9 +35,9 @@ export declare class PrescriptionsService {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
+        userId: string;
         familyMemberId: string | null;
         doctorName: string | null;
-        userId: string;
         hospitalName: string | null;
         date: Date;
         healthRecordId: string | null;
@@ -74,9 +74,9 @@ export declare class PrescriptionsService {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
+        userId: string;
         familyMemberId: string | null;
         doctorName: string | null;
-        userId: string;
         hospitalName: string | null;
         date: Date;
         healthRecordId: string | null;
@@ -113,9 +113,9 @@ export declare class PrescriptionsService {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
+        userId: string;
         familyMemberId: string | null;
         doctorName: string | null;
-        userId: string;
         hospitalName: string | null;
         date: Date;
         healthRecordId: string | null;
@@ -142,6 +142,7 @@ export declare class PrescriptionsService {
             updatedAt: Date;
             name: string;
             notes: string | null;
+            userId: string;
             dosage: string;
             instruction: import("@prisma/client").$Enums.MedicineInstruction;
             customInstruction: string | null;
@@ -152,7 +153,6 @@ export declare class PrescriptionsService {
             lowStockThreshold: number | null;
             familyMemberId: string | null;
             doctorName: string | null;
-            userId: string;
         }) | null)[];
     }>;
     addMedicineFromItem(userId: string, prescriptionId: string, itemId: string): Promise<({
@@ -173,6 +173,7 @@ export declare class PrescriptionsService {
         updatedAt: Date;
         name: string;
         notes: string | null;
+        userId: string;
         dosage: string;
         instruction: import("@prisma/client").$Enums.MedicineInstruction;
         customInstruction: string | null;
@@ -183,7 +184,6 @@ export declare class PrescriptionsService {
         lowStockThreshold: number | null;
         familyMemberId: string | null;
         doctorName: string | null;
-        userId: string;
     }) | null>;
     private createMedicineFromItem;
     private includeRelations;

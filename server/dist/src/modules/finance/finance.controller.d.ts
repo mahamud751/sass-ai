@@ -10,8 +10,8 @@ export declare class FinanceController {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
-        familyMemberId: string | null;
         userId: string;
+        familyMemberId: string | null;
         date: Date;
         amount: import("@prisma/client/runtime/library").Decimal;
         currency: string;
@@ -35,6 +35,7 @@ export declare class FinanceController {
             notes: string | null;
             familyGroupId: string;
             ownerUserId: string;
+            linkedUserId: string | null;
         } | null;
     } & {
         type: import("@prisma/client").$Enums.FinanceTransactionType;
@@ -43,8 +44,8 @@ export declare class FinanceController {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
-        familyMemberId: string | null;
         userId: string;
+        familyMemberId: string | null;
         date: Date;
         amount: import("@prisma/client/runtime/library").Decimal;
         currency: string;

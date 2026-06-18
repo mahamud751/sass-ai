@@ -24,6 +24,9 @@ class CreateFamilyMemberDto {
     address;
     emergencyContact;
     notes;
+    createLogin;
+    loginEmail;
+    password;
 }
 exports.CreateFamilyMemberDto = CreateFamilyMemberDto;
 __decorate([
@@ -84,4 +87,23 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateFamilyMemberDto.prototype, "notes", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Create a login so this member can sign in and see their own health data' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsBoolean)(),
+    __metadata("design:type", Boolean)
+], CreateFamilyMemberDto.prototype, "createLogin", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ example: 'mother@email.com' }),
+    (0, class_validator_1.ValidateIf)((o) => o.createLogin === true),
+    (0, class_validator_1.IsEmail)(),
+    __metadata("design:type", String)
+], CreateFamilyMemberDto.prototype, "loginEmail", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ example: 'password123', minLength: 6 }),
+    (0, class_validator_1.ValidateIf)((o) => o.createLogin === true),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MinLength)(6),
+    __metadata("design:type", String)
+], CreateFamilyMemberDto.prototype, "password", void 0);
 //# sourceMappingURL=create-family-member.dto.js.map

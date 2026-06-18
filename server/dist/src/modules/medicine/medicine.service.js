@@ -12,11 +12,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MedicineService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../../prisma/prisma.service");
+const family_access_service_1 = require("../family/family-access.service");
 const date_fns_1 = require("date-fns");
 let MedicineService = class MedicineService {
     prisma;
-    constructor(prisma) {
+    familyAccess;
+    constructor(prisma, familyAccess) {
         this.prisma = prisma;
+        this.familyAccess = familyAccess;
     }
     async create(userId, dto) {
         const { times, startDate, endDate, familyMemberId, ...rest } = dto;
@@ -55,9 +58,10 @@ let MedicineService = class MedicineService {
         return this.findOne(userId, medicine.id);
     }
     async findAll(userId, query) {
+        const ctx = await this.familyAccess.getContext(userId);
         return this.prisma.medicine.findMany({
             where: {
-                userId,
+                ...this.familyAccess.medicineVisibilityWhere(ctx),
                 ...(query?.familyMemberId && { familyMemberId: query.familyMemberId }),
             },
             include: {
@@ -68,10 +72,11 @@ let MedicineService = class MedicineService {
         });
     }
     async findToday(userId) {
+        const ctx = await this.familyAccess.getContext(userId);
         const today = new Date();
-        const medicines = await this.prisma.medicine.findMany({
+        return this.prisma.medicine.findMany({
             where: {
-                userId,
+                ...this.familyAccess.medicineVisibilityWhere(ctx),
                 isActive: true,
                 startDate: { lte: today },
                 OR: [{ endDate: null }, { endDate: { gte: today } }],
@@ -89,11 +94,14 @@ let MedicineService = class MedicineService {
                 familyMember: { select: { id: true, fullName: true } },
             },
         });
-        return medicines;
     }
     async findOne(userId, id) {
+        const ctx = await this.familyAccess.getContext(userId);
         const med = await this.prisma.medicine.findFirst({
-            where: { id, userId },
+            where: {
+                id,
+                ...this.familyAccess.medicineVisibilityWhere(ctx),
+            },
             include: {
                 scheduleTimes: true,
                 logs: { orderBy: { scheduledTime: 'desc' }, take: 20 },
@@ -106,10 +114,16 @@ let MedicineService = class MedicineService {
     }
     async log(userId, medicineId, dto) {
         const medicine = await this.findOne(userId, medicineId);
+        let scheduledTime = new Date();
+        if (dto.scheduledTime) {
+            const [h, m] = dto.scheduledTime.split(':').map(Number);
+            scheduledTime = new Date();
+            scheduledTime.setHours(h, m || 0, 0, 0);
+        }
         const log = await this.prisma.medicineLog.create({
             data: {
                 medicineId,
-                scheduledTime: new Date(),
+                scheduledTime,
                 takenAt: dto.status === 'TAKEN' ? new Date() : null,
                 status: dto.status,
                 notes: dto.notes,
@@ -134,6 +148,7 @@ let MedicineService = class MedicineService {
 exports.MedicineService = MedicineService;
 exports.MedicineService = MedicineService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService,
+        family_access_service_1.FamilyAccessService])
 ], MedicineService);
 //# sourceMappingURL=medicine.service.js.map

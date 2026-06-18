@@ -5,7 +5,13 @@ export declare class FamilyController {
     private readonly familyService;
     constructor(familyService: FamilyService);
     createFamily(user: any, dto: CreateFamilyDto): Promise<{
-        members: {
+        members: ({
+            linkedUser: {
+                email: string;
+                fullName: string;
+                id: string;
+            } | null;
+        } & {
             emergencyContact: string | null;
             email: string | null;
             fullName: string;
@@ -21,7 +27,8 @@ export declare class FamilyController {
             notes: string | null;
             familyGroupId: string;
             ownerUserId: string;
-        }[];
+            linkedUserId: string | null;
+        })[];
     } & {
         description: string | null;
         id: string;
@@ -31,7 +38,13 @@ export declare class FamilyController {
         ownerId: string;
     }>;
     getFamilies(user: any): Promise<({
-        members: {
+        members: ({
+            linkedUser: {
+                email: string;
+                fullName: string;
+                id: string;
+            } | null;
+        } & {
             emergencyContact: string | null;
             email: string | null;
             fullName: string;
@@ -47,7 +60,8 @@ export declare class FamilyController {
             notes: string | null;
             familyGroupId: string;
             ownerUserId: string;
-        }[];
+            linkedUserId: string | null;
+        })[];
     } & {
         description: string | null;
         id: string;
@@ -57,7 +71,13 @@ export declare class FamilyController {
         ownerId: string;
     })[]>;
     getFamily(user: any, id: string): Promise<{
-        members: {
+        members: ({
+            linkedUser: {
+                email: string;
+                fullName: string;
+                id: string;
+            } | null;
+        } & {
             emergencyContact: string | null;
             email: string | null;
             fullName: string;
@@ -73,7 +93,8 @@ export declare class FamilyController {
             notes: string | null;
             familyGroupId: string;
             ownerUserId: string;
-        }[];
+            linkedUserId: string | null;
+        })[];
     } & {
         description: string | null;
         id: string;
@@ -83,48 +104,11 @@ export declare class FamilyController {
         ownerId: string;
     }>;
     addMember(user: any, familyId: string, dto: CreateFamilyMemberDto): Promise<{
-        emergencyContact: string | null;
-        email: string | null;
-        fullName: string;
-        phone: string | null;
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        relation: import("@prisma/client").$Enums.RelationType;
-        gender: import("@prisma/client").$Enums.Gender;
-        dateOfBirth: Date | null;
-        bloodGroup: import("@prisma/client").$Enums.BloodGroup;
-        address: string | null;
-        notes: string | null;
-        familyGroupId: string;
-        ownerUserId: string;
-    }>;
-    getMembers(user: any, familyId: string): Promise<{
-        emergencyContact: string | null;
-        email: string | null;
-        fullName: string;
-        phone: string | null;
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        relation: import("@prisma/client").$Enums.RelationType;
-        gender: import("@prisma/client").$Enums.Gender;
-        dateOfBirth: Date | null;
-        bloodGroup: import("@prisma/client").$Enums.BloodGroup;
-        address: string | null;
-        notes: string | null;
-        familyGroupId: string;
-        ownerUserId: string;
-    }[]>;
-    getMember(user: any, memberId: string): Promise<{
-        familyGroup: {
-            description: string | null;
+        linkedUser: {
+            email: string;
+            fullName: string;
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            name: string;
-            ownerId: string;
-        };
+        } | null;
     } & {
         emergencyContact: string | null;
         email: string | null;
@@ -141,5 +125,62 @@ export declare class FamilyController {
         notes: string | null;
         familyGroupId: string;
         ownerUserId: string;
+        linkedUserId: string | null;
+    }>;
+    getMembers(user: any, familyId: string): Promise<({
+        linkedUser: {
+            email: string;
+            fullName: string;
+            id: string;
+        } | null;
+    } & {
+        emergencyContact: string | null;
+        email: string | null;
+        fullName: string;
+        phone: string | null;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        relation: import("@prisma/client").$Enums.RelationType;
+        gender: import("@prisma/client").$Enums.Gender;
+        dateOfBirth: Date | null;
+        bloodGroup: import("@prisma/client").$Enums.BloodGroup;
+        address: string | null;
+        notes: string | null;
+        familyGroupId: string;
+        ownerUserId: string;
+        linkedUserId: string | null;
+    })[]>;
+    getMember(user: any, memberId: string): Promise<{
+        familyGroup: {
+            description: string | null;
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            name: string;
+            ownerId: string;
+        };
+        linkedUser: {
+            email: string;
+            fullName: string;
+            id: string;
+        } | null;
+    } & {
+        emergencyContact: string | null;
+        email: string | null;
+        fullName: string;
+        phone: string | null;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        relation: import("@prisma/client").$Enums.RelationType;
+        gender: import("@prisma/client").$Enums.Gender;
+        dateOfBirth: Date | null;
+        bloodGroup: import("@prisma/client").$Enums.BloodGroup;
+        address: string | null;
+        notes: string | null;
+        familyGroupId: string;
+        ownerUserId: string;
+        linkedUserId: string | null;
     }>;
 }

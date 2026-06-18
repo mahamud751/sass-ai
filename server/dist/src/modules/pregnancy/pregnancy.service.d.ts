@@ -12,9 +12,9 @@ export declare class PregnancyService {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
+        userId: string;
         familyMemberId: string;
         status: string;
-        userId: string;
         dueDate: Date;
         lmpDate: Date | null;
         conceptionDate: Date | null;
@@ -30,9 +30,9 @@ export declare class PregnancyService {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
+        userId: string;
         familyMemberId: string;
         status: string;
-        userId: string;
         dueDate: Date;
         lmpDate: Date | null;
         conceptionDate: Date | null;
@@ -54,15 +54,16 @@ export declare class PregnancyService {
             notes: string | null;
             familyGroupId: string;
             ownerUserId: string;
+            linkedUserId: string | null;
         };
     } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
+        userId: string;
         familyMemberId: string;
         status: string;
-        userId: string;
         dueDate: Date;
         lmpDate: Date | null;
         conceptionDate: Date | null;
@@ -72,9 +73,9 @@ export declare class PregnancyService {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
+        userId: string;
         familyMemberId: string;
         status: string;
-        userId: string;
         dueDate: Date;
         lmpDate: Date | null;
         conceptionDate: Date | null;
@@ -84,9 +85,9 @@ export declare class PregnancyService {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
+        userId: string;
         familyMemberId: string;
         status: string;
-        userId: string;
         dueDate: Date;
         lmpDate: Date | null;
         conceptionDate: Date | null;

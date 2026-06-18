@@ -10,8 +10,8 @@ export declare class GoalsService {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        familyMemberId: string | null;
         userId: string;
+        familyMemberId: string | null;
         dueDate: Date | null;
         completedAt: Date | null;
         progress: number;
@@ -27,8 +27,8 @@ export declare class GoalsService {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        familyMemberId: string | null;
         userId: string;
+        familyMemberId: string | null;
         dueDate: Date | null;
         completedAt: Date | null;
         progress: number;
@@ -44,8 +44,8 @@ export declare class GoalsService {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        familyMemberId: string | null;
         userId: string;
+        familyMemberId: string | null;
         dueDate: Date | null;
         completedAt: Date | null;
         progress: number;

@@ -11,6 +11,12 @@ import { CurrentUser } from '../../common/decorators/current-user.decorator';
 export class DashboardController {
   constructor(private readonly dashboardService: DashboardService) {}
 
+  @Get('emergency')
+  @ApiOperation({ summary: 'Emergency overview from family, meds, allergies' })
+  getEmergency(@CurrentUser() user: any) {
+    return this.dashboardService.getEmergencyOverview(user.id);
+  }
+
   @Get()
   @ApiOperation({ summary: 'Get complete home dashboard data' })
   getDashboard(@CurrentUser() user: any) {

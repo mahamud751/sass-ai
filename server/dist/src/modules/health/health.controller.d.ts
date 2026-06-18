@@ -10,9 +10,9 @@ export declare class HealthController {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
+        userId: string;
         familyMemberId: string | null;
         doctorName: string | null;
-        userId: string;
         hospitalName: string | null;
         date: Date;
         diagnosis: string | null;
@@ -30,9 +30,9 @@ export declare class HealthController {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
+        userId: string;
         familyMemberId: string | null;
         doctorName: string | null;
-        userId: string;
         hospitalName: string | null;
         date: Date;
         diagnosis: string | null;
@@ -50,9 +50,9 @@ export declare class HealthController {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
+        userId: string;
         familyMemberId: string | null;
         doctorName: string | null;
-        userId: string;
         hospitalName: string | null;
         date: Date;
         diagnosis: string | null;

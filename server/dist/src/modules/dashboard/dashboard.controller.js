@@ -23,11 +23,22 @@ let DashboardController = class DashboardController {
     constructor(dashboardService) {
         this.dashboardService = dashboardService;
     }
+    getEmergency(user) {
+        return this.dashboardService.getEmergencyOverview(user.id);
+    }
     getDashboard(user) {
         return this.dashboardService.getDashboard(user.id);
     }
 };
 exports.DashboardController = DashboardController;
+__decorate([
+    (0, common_1.Get)('emergency'),
+    (0, swagger_1.ApiOperation)({ summary: 'Emergency overview from family, meds, allergies' }),
+    __param(0, (0, current_user_decorator_1.CurrentUser)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], DashboardController.prototype, "getEmergency", null);
 __decorate([
     (0, common_1.Get)(),
     (0, swagger_1.ApiOperation)({ summary: 'Get complete home dashboard data' }),

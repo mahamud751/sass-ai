@@ -1,8 +1,10 @@
 import { PrismaService } from '../../prisma/prisma.service';
+import { FamilyAccessService } from '../family/family-access.service';
 import { CreateHealthRecordDto } from './dto/create-health-record.dto';
 export declare class HealthService {
     private prisma;
-    constructor(prisma: PrismaService);
+    private familyAccess;
+    constructor(prisma: PrismaService, familyAccess: FamilyAccessService);
     create(userId: string, dto: CreateHealthRecordDto): Promise<{
         type: import("@prisma/client").$Enums.HealthRecordType;
         title: string;
@@ -10,9 +12,9 @@ export declare class HealthService {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
+        userId: string;
         familyMemberId: string | null;
         doctorName: string | null;
-        userId: string;
         hospitalName: string | null;
         date: Date;
         diagnosis: string | null;
@@ -30,9 +32,9 @@ export declare class HealthService {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
+        userId: string;
         familyMemberId: string | null;
         doctorName: string | null;
-        userId: string;
         hospitalName: string | null;
         date: Date;
         diagnosis: string | null;
@@ -50,9 +52,9 @@ export declare class HealthService {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
+        userId: string;
         familyMemberId: string | null;
         doctorName: string | null;
-        userId: string;
         hospitalName: string | null;
         date: Date;
         diagnosis: string | null;

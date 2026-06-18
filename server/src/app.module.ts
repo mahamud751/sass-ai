@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { ScheduleModule } from '@nestjs/schedule';
 import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -39,6 +40,7 @@ import { Reflector } from '@nestjs/core';
       load: [configuration],
       validate,
     }),
+    ScheduleModule.forRoot(),
     PrismaModule,
     AuthModule,
     FamilyModule,

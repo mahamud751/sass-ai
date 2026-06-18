@@ -1,9 +1,11 @@
 import { PrismaService } from '../../prisma/prisma.service';
+import { FamilyAccessService } from '../family/family-access.service';
 import { CreateMedicineDto } from './dto/create-medicine.dto';
 import { LogMedicineDto } from './dto/log-medicine.dto';
 export declare class MedicineService {
     private prisma;
-    constructor(prisma: PrismaService);
+    private familyAccess;
+    constructor(prisma: PrismaService, familyAccess: FamilyAccessService);
     create(userId: string, dto: CreateMedicineDto): Promise<{
         familyMember: {
             emergencyContact: string | null;
@@ -21,6 +23,7 @@ export declare class MedicineService {
             notes: string | null;
             familyGroupId: string;
             ownerUserId: string;
+            linkedUserId: string | null;
         } | null;
         scheduleTimes: {
             id: string;
@@ -44,6 +47,7 @@ export declare class MedicineService {
         updatedAt: Date;
         name: string;
         notes: string | null;
+        userId: string;
         dosage: string;
         instruction: import("@prisma/client").$Enums.MedicineInstruction;
         customInstruction: string | null;
@@ -54,7 +58,6 @@ export declare class MedicineService {
         lowStockThreshold: number | null;
         familyMemberId: string | null;
         doctorName: string | null;
-        userId: string;
     }>;
     findAll(userId: string, query?: {
         familyMemberId?: string;
@@ -77,6 +80,7 @@ export declare class MedicineService {
         updatedAt: Date;
         name: string;
         notes: string | null;
+        userId: string;
         dosage: string;
         instruction: import("@prisma/client").$Enums.MedicineInstruction;
         customInstruction: string | null;
@@ -87,7 +91,6 @@ export declare class MedicineService {
         lowStockThreshold: number | null;
         familyMemberId: string | null;
         doctorName: string | null;
-        userId: string;
     })[]>;
     findToday(userId: string): Promise<({
         familyMember: {
@@ -116,6 +119,7 @@ export declare class MedicineService {
         updatedAt: Date;
         name: string;
         notes: string | null;
+        userId: string;
         dosage: string;
         instruction: import("@prisma/client").$Enums.MedicineInstruction;
         customInstruction: string | null;
@@ -126,7 +130,6 @@ export declare class MedicineService {
         lowStockThreshold: number | null;
         familyMemberId: string | null;
         doctorName: string | null;
-        userId: string;
     })[]>;
     findOne(userId: string, id: string): Promise<{
         familyMember: {
@@ -145,6 +148,7 @@ export declare class MedicineService {
             notes: string | null;
             familyGroupId: string;
             ownerUserId: string;
+            linkedUserId: string | null;
         } | null;
         scheduleTimes: {
             id: string;
@@ -168,6 +172,7 @@ export declare class MedicineService {
         updatedAt: Date;
         name: string;
         notes: string | null;
+        userId: string;
         dosage: string;
         instruction: import("@prisma/client").$Enums.MedicineInstruction;
         customInstruction: string | null;
@@ -178,7 +183,6 @@ export declare class MedicineService {
         lowStockThreshold: number | null;
         familyMemberId: string | null;
         doctorName: string | null;
-        userId: string;
     }>;
     log(userId: string, medicineId: string, dto: LogMedicineDto): Promise<{
         id: string;

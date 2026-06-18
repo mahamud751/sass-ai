@@ -7,41 +7,41 @@ export declare class FilesController {
     private readonly filesService;
     constructor(filesService: FilesService);
     uploadFile(user: any, file: Express.Multer.File): Promise<{
+        path: string;
         id: string;
+        createdAt: Date;
+        userId: string;
+        url: string | null;
+        metadata: import("@prisma/client/runtime/library").JsonValue | null;
         originalName: string;
         filename: string;
         mimetype: string;
         size: number;
-        path: string;
-        url: string | null;
-        metadata: import("@prisma/client/runtime/library").JsonValue | null;
-        createdAt: Date;
-        userId: string;
     }>;
     uploadAndConvert(user: any, file: Express.Multer.File, targetFormat: 'pdf' | 'docx', mode?: 'exact' | 'rich' | 'text'): Promise<{
         source: {
+            path: string;
             id: string;
+            createdAt: Date;
+            userId: string;
+            url: string | null;
+            metadata: import("@prisma/client/runtime/library").JsonValue | null;
             originalName: string;
             filename: string;
             mimetype: string;
             size: number;
-            path: string;
-            url: string | null;
-            metadata: import("@prisma/client/runtime/library").JsonValue | null;
-            createdAt: Date;
-            userId: string;
         };
         converted: {
+            path: string;
             id: string;
+            createdAt: Date;
+            userId: string;
+            url: string | null;
+            metadata: import("@prisma/client/runtime/library").JsonValue | null;
             originalName: string;
             filename: string;
             mimetype: string;
             size: number;
-            path: string;
-            url: string | null;
-            metadata: import("@prisma/client/runtime/library").JsonValue | null;
-            createdAt: Date;
-            userId: string;
         };
     }>;
     getConverterCapabilities(): Promise<{
@@ -58,68 +58,68 @@ export declare class FilesController {
         installHint: string | null;
     }>;
     getFiles(user: any): Promise<{
+        path: string;
         id: string;
+        createdAt: Date;
+        userId: string;
+        url: string | null;
+        metadata: import("@prisma/client/runtime/library").JsonValue | null;
         originalName: string;
         filename: string;
         mimetype: string;
         size: number;
-        path: string;
-        url: string | null;
-        metadata: import("@prisma/client/runtime/library").JsonValue | null;
-        createdAt: Date;
-        userId: string;
     }[]>;
     saveFormatEditor(user: any, dto: EditFileHtmlDto): Promise<{
         docx: {
+            path: string;
             id: string;
+            createdAt: Date;
+            userId: string;
+            url: string | null;
+            metadata: import("@prisma/client/runtime/library").JsonValue | null;
             originalName: string;
             filename: string;
             mimetype: string;
             size: number;
-            path: string;
-            url: string | null;
-            metadata: import("@prisma/client/runtime/library").JsonValue | null;
-            createdAt: Date;
-            userId: string;
         };
         pdf: {
+            path: string;
             id: string;
+            createdAt: Date;
+            userId: string;
+            url: string | null;
+            metadata: import("@prisma/client/runtime/library").JsonValue | null;
             originalName: string;
             filename: string;
             mimetype: string;
             size: number;
-            path: string;
-            url: string | null;
-            metadata: import("@prisma/client/runtime/library").JsonValue | null;
-            createdAt: Date;
-            userId: string;
         } | null;
         editsApplied: boolean;
         message: string;
     }>;
     convert(user: any, dto: ConvertFileDto): Promise<{
+        path: string;
         id: string;
+        createdAt: Date;
+        userId: string;
+        url: string | null;
+        metadata: import("@prisma/client/runtime/library").JsonValue | null;
         originalName: string;
         filename: string;
         mimetype: string;
         size: number;
-        path: string;
-        url: string | null;
-        metadata: import("@prisma/client/runtime/library").JsonValue | null;
-        createdAt: Date;
-        userId: string;
     }>;
     edit(user: any, dto: EditFileDto): Promise<{
+        path: string;
         id: string;
+        createdAt: Date;
+        userId: string;
+        url: string | null;
+        metadata: import("@prisma/client/runtime/library").JsonValue | null;
         originalName: string;
         filename: string;
         mimetype: string;
         size: number;
-        path: string;
-        url: string | null;
-        metadata: import("@prisma/client/runtime/library").JsonValue | null;
-        createdAt: Date;
-        userId: string;
     }>;
     downloadFile(user: any, id: string): Promise<StreamableFile>;
     extractHtml(user: any, id: string): Promise<{
@@ -128,28 +128,28 @@ export declare class FilesController {
     extractText(user: any, id: string): Promise<import("./files.service").TextExtractionResult>;
     prepareForEdit(user: any, id: string): Promise<{
         sourceFile: {
+            path: string;
             id: string;
+            createdAt: Date;
+            userId: string;
+            url: string | null;
+            metadata: import("@prisma/client/runtime/library").JsonValue | null;
             originalName: string;
             filename: string;
             mimetype: string;
             size: number;
-            path: string;
-            url: string | null;
-            metadata: import("@prisma/client/runtime/library").JsonValue | null;
-            createdAt: Date;
-            userId: string;
         };
         editableFile: {
+            path: string;
             id: string;
+            createdAt: Date;
+            userId: string;
+            url: string | null;
+            metadata: import("@prisma/client/runtime/library").JsonValue | null;
             originalName: string;
             filename: string;
             mimetype: string;
             size: number;
-            path: string;
-            url: string | null;
-            metadata: import("@prisma/client/runtime/library").JsonValue | null;
-            createdAt: Date;
-            userId: string;
         };
         text: string;
         hasGarbage: boolean;
@@ -158,28 +158,28 @@ export declare class FilesController {
     }>;
     openFormatEditor(user: any, id: string): Promise<{
         sourceFile: {
+            path: string;
             id: string;
+            createdAt: Date;
+            userId: string;
+            url: string | null;
+            metadata: import("@prisma/client/runtime/library").JsonValue | null;
             originalName: string;
             filename: string;
             mimetype: string;
             size: number;
-            path: string;
-            url: string | null;
-            metadata: import("@prisma/client/runtime/library").JsonValue | null;
-            createdAt: Date;
-            userId: string;
         };
         editableFile: {
+            path: string;
             id: string;
+            createdAt: Date;
+            userId: string;
+            url: string | null;
+            metadata: import("@prisma/client/runtime/library").JsonValue | null;
             originalName: string;
             filename: string;
             mimetype: string;
             size: number;
-            path: string;
-            url: string | null;
-            metadata: import("@prisma/client/runtime/library").JsonValue | null;
-            createdAt: Date;
-            userId: string;
         };
         editBundleId: string;
         htmlPath: string;

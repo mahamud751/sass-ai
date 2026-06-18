@@ -12,8 +12,8 @@ export declare class DocumentsController {
         createdAt: Date;
         updatedAt: Date;
         tags: string[];
-        familyMemberId: string | null;
         userId: string;
+        familyMemberId: string | null;
         fileId: string | null;
         fileUrl: string | null;
         expiryDate: Date | null;
@@ -33,8 +33,8 @@ export declare class DocumentsController {
         createdAt: Date;
         updatedAt: Date;
         tags: string[];
-        familyMemberId: string | null;
         userId: string;
+        familyMemberId: string | null;
         fileId: string | null;
         fileUrl: string | null;
         expiryDate: Date | null;
@@ -58,6 +58,7 @@ export declare class DocumentsController {
             notes: string | null;
             familyGroupId: string;
             ownerUserId: string;
+            linkedUserId: string | null;
         } | null;
     } & {
         type: import("@prisma/client").$Enums.DocumentType;
@@ -67,8 +68,8 @@ export declare class DocumentsController {
         createdAt: Date;
         updatedAt: Date;
         tags: string[];
-        familyMemberId: string | null;
         userId: string;
+        familyMemberId: string | null;
         fileId: string | null;
         fileUrl: string | null;
         expiryDate: Date | null;
@@ -92,6 +93,7 @@ export declare class DocumentsController {
             notes: string | null;
             familyGroupId: string;
             ownerUserId: string;
+            linkedUserId: string | null;
         } | null;
     } & {
         type: import("@prisma/client").$Enums.DocumentType;
@@ -101,8 +103,8 @@ export declare class DocumentsController {
         createdAt: Date;
         updatedAt: Date;
         tags: string[];
-        familyMemberId: string | null;
         userId: string;
+        familyMemberId: string | null;
         fileId: string | null;
         fileUrl: string | null;
         expiryDate: Date | null;
@@ -117,8 +119,8 @@ export declare class DocumentsController {
         createdAt: Date;
         updatedAt: Date;
         tags: string[];
-        familyMemberId: string | null;
         userId: string;
+        familyMemberId: string | null;
         fileId: string | null;
         fileUrl: string | null;
         expiryDate: Date | null;
@@ -133,8 +135,8 @@ export declare class DocumentsController {
         createdAt: Date;
         updatedAt: Date;
         tags: string[];
-        familyMemberId: string | null;
         userId: string;
+        familyMemberId: string | null;
         fileId: string | null;
         fileUrl: string | null;
         expiryDate: Date | null;

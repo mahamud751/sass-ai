@@ -10,4 +10,7 @@ export declare class CreateFamilyMemberDto {
     address?: string;
     emergencyContact?: string;
     notes?: string;
+    createLogin?: boolean;
+    loginEmail?: string;
+    password?: string;
 }

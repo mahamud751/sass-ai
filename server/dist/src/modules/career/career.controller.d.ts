@@ -9,8 +9,8 @@ export declare class CareerController {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
-        familyMemberId: string | null;
         userId: string;
+        familyMemberId: string | null;
         roadmap: import("@prisma/client/runtime/library").JsonValue | null;
         targetRole: string;
         targetCompany: string | null;
@@ -30,8 +30,8 @@ export declare class CareerController {
             createdAt: Date;
             updatedAt: Date;
             notes: string | null;
-            status: import("@prisma/client").$Enums.JobApplicationStatus;
             userId: string;
+            status: import("@prisma/client").$Enums.JobApplicationStatus;
             careerGoalId: string | null;
             company: string;
             appliedDate: Date;
@@ -45,8 +45,8 @@ export declare class CareerController {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
-        familyMemberId: string | null;
         userId: string;
+        familyMemberId: string | null;
         roadmap: import("@prisma/client/runtime/library").JsonValue | null;
         targetRole: string;
         targetCompany: string | null;
@@ -60,8 +60,8 @@ export declare class CareerController {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
-        familyMemberId: string | null;
         userId: string;
+        familyMemberId: string | null;
         roadmap: import("@prisma/client/runtime/library").JsonValue | null;
         targetRole: string;
         targetCompany: string | null;
@@ -75,8 +75,8 @@ export declare class CareerController {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
-        familyMemberId: string | null;
         userId: string;
+        familyMemberId: string | null;
         roadmap: import("@prisma/client/runtime/library").JsonValue | null;
         targetRole: string;
         targetCompany: string | null;
@@ -91,8 +91,8 @@ export declare class CareerController {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
-        status: import("@prisma/client").$Enums.JobApplicationStatus;
         userId: string;
+        status: import("@prisma/client").$Enums.JobApplicationStatus;
         careerGoalId: string | null;
         company: string;
         appliedDate: Date;
@@ -107,8 +107,8 @@ export declare class CareerController {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
-        status: import("@prisma/client").$Enums.JobApplicationStatus;
         userId: string;
+        status: import("@prisma/client").$Enums.JobApplicationStatus;
         careerGoalId: string | null;
         company: string;
         appliedDate: Date;
@@ -126,8 +126,8 @@ export declare class CareerController {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
-        status: import("@prisma/client").$Enums.JobApplicationStatus;
         userId: string;
+        status: import("@prisma/client").$Enums.JobApplicationStatus;
         careerGoalId: string | null;
         company: string;
         appliedDate: Date;
@@ -141,8 +141,8 @@ export declare class CareerController {
         createdAt: Date;
         updatedAt: Date;
         notes: string | null;
-        familyMemberId: string | null;
         userId: string;
+        familyMemberId: string | null;
         roadmap: import("@prisma/client/runtime/library").JsonValue | null;
         targetRole: string;
         targetCompany: string | null;

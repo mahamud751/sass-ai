@@ -215,6 +215,8 @@ model User {
   pregnancies        Pregnancy[]
   immunizations      Immunization[]
 
+  linkedFamilyMember FamilyMember? @relation("FamilyMemberLinkedUser")
+
   @@index([email])
 }
 
@@ -248,6 +250,8 @@ model FamilyMember {
   address          String?
   emergencyContact String?
   notes            String?
+  linkedUserId     String?      @unique
+  linkedUser       User?        @relation("FamilyMemberLinkedUser", fields: [linkedUserId], references: [id], onDelete: SetNull)
   createdAt        DateTime     @default(now())
   updatedAt        DateTime     @updatedAt
 
@@ -269,6 +273,7 @@ model FamilyMember {
 
   @@index([familyGroupId])
   @@index([ownerUserId])
+  @@index([linkedUserId])
 }
 
 model Prescription {

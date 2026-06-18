@@ -52,6 +52,7 @@ export class AuthService {
         fullName: dto.fullName,
         relation: 'SELF',
         phone: dto.phone,
+        linkedUserId: user.id,
       },
     });
 
