@@ -18,15 +18,30 @@ let GoalsService = class GoalsService {
         this.prisma = prisma;
     }
     async create(userId, dto) {
-        return this.prisma.goal.create({ data: { userId, ...dto } });
+        return this.prisma.goal.create({
+            data: {
+                userId,
+                title: dto.title,
+                type: dto.type,
+                description: dto.description,
+                progress: dto.progress ?? 0,
+                familyMemberId: dto.familyMemberId || null,
+            },
+        });
     }
     async findAll(userId) {
-        return this.prisma.goal.findMany({ where: { userId }, orderBy: { createdAt: 'desc' } });
+        return this.prisma.goal.findMany({
+            where: { userId },
+            orderBy: { createdAt: 'desc' },
+        });
     }
     async updateProgress(userId, id, progress) {
+        const goal = await this.prisma.goal.findFirst({ where: { id, userId } });
+        if (!goal)
+            throw new common_1.NotFoundException('Goal not found');
         return this.prisma.goal.update({
             where: { id },
-            data: { progress, currentValue: progress },
+            data: { progress },
         });
     }
 };

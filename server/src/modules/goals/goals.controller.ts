@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Param, Patch, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { GoalsService } from './goals.service';
+import { CreateGoalDto } from './dto/create-goal.dto';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 
@@ -13,7 +14,7 @@ export class GoalsController {
 
   @Post()
   @ApiOperation({ summary: 'Create goal' })
-  create(@CurrentUser() user: any, @Body() dto: any) {
+  create(@CurrentUser() user: any, @Body() dto: CreateGoalDto) {
     return this.goalsService.create(user.id, dto);
   }
 

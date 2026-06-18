@@ -15,19 +15,38 @@ export declare class AiService {
         note: string;
     }>;
     getSessions(userId: string): Promise<{
-        id: string;
         title: string | null;
+        id: string;
         createdAt: Date;
         updatedAt: Date;
         userId: string;
     }[]>;
     getMessages(userId: string, sessionId: string): Promise<{
         id: string;
+        role: string;
         createdAt: Date;
         sessionId: string;
-        role: string;
         content: string;
         action: import("@prisma/client").$Enums.AiActionType | null;
         metadata: import("@prisma/client/runtime/library").JsonValue | null;
     }[]>;
+    fetchLinkedInPublicPreview(linkedinUrl: string): Promise<{
+        success: boolean;
+        linkedin: string;
+        error: string;
+        fullName?: undefined;
+        headline?: undefined;
+        location?: undefined;
+        summary?: undefined;
+        note?: undefined;
+    } | {
+        success: boolean;
+        linkedin: string;
+        fullName: string;
+        headline: string;
+        location: string;
+        summary: string;
+        note: string;
+        error?: undefined;
+    }>;
 }

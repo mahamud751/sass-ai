@@ -66,5 +66,10 @@ export class CreateMedicineDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
+  doctorName?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
   notes?: string;
 }

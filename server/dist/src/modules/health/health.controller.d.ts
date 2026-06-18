@@ -11,10 +11,10 @@ export declare class HealthController {
         updatedAt: Date;
         notes: string | null;
         familyMemberId: string | null;
-        userId: string;
-        date: Date;
         doctorName: string | null;
+        userId: string;
         hospitalName: string | null;
+        date: Date;
         diagnosis: string | null;
         aiSummary: string | null;
         fileIds: string[];
@@ -31,10 +31,10 @@ export declare class HealthController {
         updatedAt: Date;
         notes: string | null;
         familyMemberId: string | null;
-        userId: string;
-        date: Date;
         doctorName: string | null;
+        userId: string;
         hospitalName: string | null;
+        date: Date;
         diagnosis: string | null;
         aiSummary: string | null;
         fileIds: string[];
@@ -51,10 +51,10 @@ export declare class HealthController {
         updatedAt: Date;
         notes: string | null;
         familyMemberId: string | null;
-        userId: string;
-        date: Date;
         doctorName: string | null;
+        userId: string;
         hospitalName: string | null;
+        date: Date;
         diagnosis: string | null;
         aiSummary: string | null;
         fileIds: string[];

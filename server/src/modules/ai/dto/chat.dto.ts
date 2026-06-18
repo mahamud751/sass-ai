@@ -11,3 +11,9 @@ export class ChatDto {
   @IsString()
   sessionId?: string;
 }
+
+export class LinkedInPreviewDto {
+  @ApiProperty({ example: 'https://www.linkedin.com/in/mahamud-pino' })
+  @IsString()
+  url: string;
+}

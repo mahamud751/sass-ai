@@ -25,6 +25,7 @@ class CreateMedicineDto {
     stockCount;
     lowStockThreshold;
     familyMemberId;
+    doctorName;
     notes;
 }
 exports.CreateMedicineDto = CreateMedicineDto;
@@ -92,6 +93,12 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateMedicineDto.prototype, "familyMemberId", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateMedicineDto.prototype, "doctorName", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsOptional)(),

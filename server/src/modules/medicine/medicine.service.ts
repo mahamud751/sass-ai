@@ -29,6 +29,7 @@ export class MedicineService {
         familyMemberId: familyMemberId || null,
         name: rest.name,
         dosage: rest.dosage,
+        doctorName: rest.doctorName,
         instruction: rest.instruction || 'AFTER_MEAL',
         customInstruction: rest.customInstruction,
         startDate: new Date(startDate),

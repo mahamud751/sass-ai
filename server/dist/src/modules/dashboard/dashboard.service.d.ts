@@ -30,6 +30,7 @@ export declare class DashboardService {
             stockCount: number | null;
             lowStockThreshold: number | null;
             familyMemberId: string | null;
+            doctorName: string | null;
             userId: string;
         })[];
         pendingTasks: number;

@@ -16,6 +16,7 @@ exports.GoalsController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const goals_service_1 = require("./goals.service");
+const create_goal_dto_1 = require("./dto/create-goal.dto");
 const jwt_auth_guard_1 = require("../../common/guards/jwt-auth.guard");
 const current_user_decorator_1 = require("../../common/decorators/current-user.decorator");
 let GoalsController = class GoalsController {
@@ -40,7 +41,7 @@ __decorate([
     __param(0, (0, current_user_decorator_1.CurrentUser)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Object, create_goal_dto_1.CreateGoalDto]),
     __metadata("design:returntype", void 0)
 ], GoalsController.prototype, "create", null);
 __decorate([

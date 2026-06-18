@@ -1,21 +1,23 @@
 import { GoalsService } from './goals.service';
+import { CreateGoalDto } from './dto/create-goal.dto';
 export declare class GoalsController {
     private readonly goalsService;
     constructor(goalsService: GoalsService);
-    create(user: any, dto: any): Promise<{
+    create(user: any, dto: CreateGoalDto): Promise<{
         type: import("@prisma/client").$Enums.GoalType;
         description: string | null;
         title: string;
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        familyMemberId: string | null;
         userId: string;
         dueDate: Date | null;
         completedAt: Date | null;
+        progress: number;
         targetValue: import("@prisma/client/runtime/library").Decimal | null;
         currentValue: import("@prisma/client/runtime/library").Decimal | null;
         unit: string | null;
-        progress: number;
         milestones: import("@prisma/client/runtime/library").JsonValue | null;
     }>;
     findAll(user: any): Promise<{
@@ -25,13 +27,14 @@ export declare class GoalsController {
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        familyMemberId: string | null;
         userId: string;
         dueDate: Date | null;
         completedAt: Date | null;
+        progress: number;
         targetValue: import("@prisma/client/runtime/library").Decimal | null;
         currentValue: import("@prisma/client/runtime/library").Decimal | null;
         unit: string | null;
-        progress: number;
         milestones: import("@prisma/client/runtime/library").JsonValue | null;
     }[]>;
     update(user: any, id: string, body: {
@@ -43,13 +46,14 @@ export declare class GoalsController {
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        familyMemberId: string | null;
         userId: string;
         dueDate: Date | null;
         completedAt: Date | null;
+        progress: number;
         targetValue: import("@prisma/client/runtime/library").Decimal | null;
         currentValue: import("@prisma/client/runtime/library").Decimal | null;
         unit: string | null;
-        progress: number;
         milestones: import("@prisma/client/runtime/library").JsonValue | null;
     }>;
 }

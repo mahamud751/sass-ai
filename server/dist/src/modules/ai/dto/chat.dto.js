@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ChatDto = void 0;
+exports.LinkedInPreviewDto = exports.ChatDto = void 0;
 const class_validator_1 = require("class-validator");
 const swagger_1 = require("@nestjs/swagger");
 class ChatDto {
@@ -28,4 +28,13 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], ChatDto.prototype, "sessionId", void 0);
+class LinkedInPreviewDto {
+    url;
+}
+exports.LinkedInPreviewDto = LinkedInPreviewDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: 'https://www.linkedin.com/in/mahamud-pino' }),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], LinkedInPreviewDto.prototype, "url", void 0);
 //# sourceMappingURL=chat.dto.js.map

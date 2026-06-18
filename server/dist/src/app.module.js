@@ -19,6 +19,7 @@ const prisma_module_1 = require("./prisma/prisma.module");
 const auth_module_1 = require("./modules/auth/auth.module");
 const family_module_1 = require("./modules/family/family.module");
 const medicine_module_1 = require("./modules/medicine/medicine.module");
+const prescriptions_module_1 = require("./modules/prescriptions/prescriptions.module");
 const documents_module_1 = require("./modules/documents/documents.module");
 const dashboard_module_1 = require("./modules/dashboard/dashboard.module");
 const ai_module_1 = require("./modules/ai/ai.module");
@@ -57,6 +58,7 @@ exports.AppModule = AppModule = __decorate([
             auth_module_1.AuthModule,
             family_module_1.FamilyModule,
             medicine_module_1.MedicineModule,
+            prescriptions_module_1.PrescriptionsModule,
             documents_module_1.DocumentsModule,
             dashboard_module_1.DashboardModule,
             ai_module_1.AiModule,

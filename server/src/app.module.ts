@@ -7,6 +7,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { FamilyModule } from './modules/family/family.module';
 import { MedicineModule } from './modules/medicine/medicine.module';
+import { PrescriptionsModule } from './modules/prescriptions/prescriptions.module';
 import { DocumentsModule } from './modules/documents/documents.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { AiModule } from './modules/ai/ai.module';
@@ -42,6 +43,7 @@ import { Reflector } from '@nestjs/core';
     AuthModule,
     FamilyModule,
     MedicineModule,
+    PrescriptionsModule,
     DocumentsModule,
     DashboardModule,
     AiModule,

@@ -33,6 +33,9 @@ let AiController = class AiController {
     getMessages(user, id) {
         return this.aiService.getMessages(user.id, id);
     }
+    async linkedinPreview(dto) {
+        return this.aiService.fetchLinkedInPublicPreview(dto.url);
+    }
 };
 exports.AiController = AiController;
 __decorate([
@@ -61,6 +64,14 @@ __decorate([
     __metadata("design:paramtypes", [Object, String]),
     __metadata("design:returntype", void 0)
 ], AiController.prototype, "getMessages", null);
+__decorate([
+    (0, common_1.Post)('linkedin-preview'),
+    (0, swagger_1.ApiOperation)({ summary: 'Best-effort fetch of public LinkedIn profile basics (name, headline, about snippet). Full Experience/Education requires paste from page.' }),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [chat_dto_1.LinkedInPreviewDto]),
+    __metadata("design:returntype", Promise)
+], AiController.prototype, "linkedinPreview", null);
 exports.AiController = AiController = __decorate([
     (0, swagger_1.ApiTags)('AI Assistant'),
     (0, common_1.Controller)('ai'),

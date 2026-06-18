@@ -176,6 +176,72 @@ If the user asks for actions (create task, search data), suggest them but note t
             orderBy: { createdAt: 'asc' },
         });
     }
+    async fetchLinkedInPublicPreview(linkedinUrl) {
+        const cleanUrl = linkedinUrl.split('?')[0].replace(/\/$/, '');
+        try {
+            const res = await fetch(cleanUrl, {
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                    'Accept-Language': 'en-US,en;q=0.9',
+                },
+                redirect: 'follow',
+            });
+            if (!res.ok) {
+                return {
+                    success: false,
+                    linkedin: cleanUrl,
+                    error: 'LinkedIn blocked the public request or requires login. Paste the text content instead for full details.',
+                };
+            }
+            const html = await res.text();
+            let fullName = '';
+            const titleMatch = html.match(/<title[^>]*>([^<]+?)(\s*[\|–-]\s*LinkedIn.*?)?<\/title>/i);
+            if (titleMatch) {
+                fullName = titleMatch[1].trim().replace(/\s*[\|–-].*$/, '').trim();
+            }
+            if (!fullName) {
+                const ogTitle = html.match(/property="og:title"\s+content="([^"]+)"/i);
+                if (ogTitle)
+                    fullName = ogTitle[1].replace(/\s*[\|–-].*$/, '').trim();
+            }
+            let headline = '';
+            const headlineMatch = html.match(/"headline":"([^"]{3,120})"/i) || html.match(/property="og:description"\s+content="([^"]+)"/i);
+            if (headlineMatch)
+                headline = headlineMatch[1].replace(/\\u002d/g, '-').trim();
+            let location = '';
+            const locMatch = html.match(/"locationName":"([^"]+)"/i) || html.match(/"geoLocationName":"([^"]+)"/i) || html.match(/location[^<]*>([^<]{3,60})</i);
+            if (locMatch)
+                location = locMatch[1].trim();
+            let summary = '';
+            const aboutMatch = html.match(/"about":"((?:[^"\\]|\\.)+)"/i) || html.match(/About[^<]*<\/[^>]+>\s*<[^>]+>([\s\S]{30,600}?)<\/p>/i);
+            if (aboutMatch) {
+                summary = aboutMatch[1]
+                    .replace(/\\n/g, ' ')
+                    .replace(/\\"/g, '"')
+                    .replace(/\s+/g, ' ')
+                    .slice(0, 480)
+                    .trim();
+            }
+            return {
+                success: true,
+                linkedin: cleanUrl,
+                fullName: fullName || '',
+                headline: headline || '',
+                location: location || '',
+                summary: summary || '',
+                note: 'Public view is limited. For full Experience + Education with all bullets, open the profile, expand sections, and paste the text.',
+            };
+        }
+        catch (err) {
+            console.warn('LinkedIn public fetch failed:', err?.message);
+            return {
+                success: false,
+                linkedin: cleanUrl,
+                error: 'Could not fetch public profile data (LinkedIn limits unauthenticated access). Paste the expanded profile sections for complete import.',
+            };
+        }
+    }
 };
 exports.AiService = AiService;
 exports.AiService = AiService = __decorate([

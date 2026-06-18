@@ -53,6 +53,7 @@ export declare class MedicineService {
         stockCount: number | null;
         lowStockThreshold: number | null;
         familyMemberId: string | null;
+        doctorName: string | null;
         userId: string;
     }>;
     findAll(userId: string, query?: {
@@ -85,6 +86,7 @@ export declare class MedicineService {
         stockCount: number | null;
         lowStockThreshold: number | null;
         familyMemberId: string | null;
+        doctorName: string | null;
         userId: string;
     })[]>;
     findToday(userId: string): Promise<({
@@ -123,6 +125,7 @@ export declare class MedicineService {
         stockCount: number | null;
         lowStockThreshold: number | null;
         familyMemberId: string | null;
+        doctorName: string | null;
         userId: string;
     })[]>;
     findOne(userId: string, id: string): Promise<{
@@ -174,6 +177,7 @@ export declare class MedicineService {
         stockCount: number | null;
         lowStockThreshold: number | null;
         familyMemberId: string | null;
+        doctorName: string | null;
         userId: string;
     }>;
     log(userId: string, medicineId: string, dto: LogMedicineDto): Promise<{

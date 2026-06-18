@@ -11,5 +11,6 @@ export declare class CreateMedicineDto {
     stockCount?: number;
     lowStockThreshold?: number;
     familyMemberId?: string;
+    doctorName?: string;
     notes?: string;
 }

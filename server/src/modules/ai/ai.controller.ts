@@ -1,7 +1,7 @@
 import { Controller, Post, Get, Body, Param, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { AiService } from './ai.service';
-import { ChatDto } from './dto/chat.dto';
+import { ChatDto, LinkedInPreviewDto } from './dto/chat.dto';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 
@@ -28,5 +28,11 @@ export class AiController {
   @ApiOperation({ summary: 'Get messages in a session' })
   getMessages(@CurrentUser() user: any, @Param('id') id: string) {
     return this.aiService.getMessages(user.id, id);
+  }
+
+  @Post('linkedin-preview')
+  @ApiOperation({ summary: 'Best-effort fetch of public LinkedIn profile basics (name, headline, about snippet). Full Experience/Education requires paste from page.' })
+  async linkedinPreview(@Body() dto: LinkedInPreviewDto) {
+    return this.aiService.fetchLinkedInPublicPreview(dto.url);
   }
 }

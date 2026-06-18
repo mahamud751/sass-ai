@@ -194,6 +194,7 @@ model User {
   familyGroups       FamilyGroup[]
   ownedFamilyMembers FamilyMember[]       @relation("FamilyMemberOwner")
   medicines          Medicine[]
+  prescriptions      Prescription[]
   healthRecords      HealthRecord[]
   documents          Document[]
   financeTransactions FinanceTransaction[]
@@ -252,6 +253,7 @@ model FamilyMember {
 
   // Scoped data for this member
   medicines     Medicine[]
+  prescriptions Prescription[]
   healthRecords HealthRecord[]
   documents     Document[]
   tasks         Task[]
@@ -263,9 +265,50 @@ model FamilyMember {
   pregnancies     Pregnancy[]
   immunizations   Immunization[]
   careerGoals     CareerGoal[]
+  goals           Goal[]
 
   @@index([familyGroupId])
   @@index([ownerUserId])
+}
+
+model Prescription {
+  id             String            @id @default(uuid())
+  userId         String
+  user           User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  familyMemberId String?
+  familyMember   FamilyMember?     @relation(fields: [familyMemberId], references: [id], onDelete: SetNull)
+  doctorName     String?
+  hospitalName   String?
+  date           DateTime
+  notes          String?
+  healthRecordId String?           @unique
+  fileId         String?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  items PrescriptionItem[]
+
+  @@index([userId])
+  @@index([familyMemberId])
+  @@index([date])
+}
+
+model PrescriptionItem {
+  id             String               @id @default(uuid())
+  prescriptionId String
+  prescription   Prescription         @relation(fields: [prescriptionId], references: [id], onDelete: Cascade)
+  medicineName   String
+  dosage         String
+  frequency      ReminderFrequency    @default(DAILY)
+  times          String[]             // "09:00", "21:00"
+  instruction    MedicineInstruction  @default(AFTER_MEAL)
+  durationDays   Int?
+  notes          String?
+  medicineId     String?              @unique
+  medicine       Medicine?            @relation(fields: [medicineId], references: [id], onDelete: SetNull)
+  createdAt      DateTime             @default(now())
+
+  @@index([prescriptionId])
 }
 
 model Medicine {
@@ -274,6 +317,7 @@ model Medicine {
   user               User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
   familyMemberId     String?
   familyMember       FamilyMember?        @relation(fields: [familyMemberId], references: [id], onDelete: SetNull)
+  doctorName         String?
   name               String
   dosage             String
   instruction        MedicineInstruction  @default(AFTER_MEAL)
@@ -288,8 +332,9 @@ model Medicine {
   createdAt          DateTime             @default(now())
   updatedAt          DateTime             @updatedAt
 
-  scheduleTimes MedicineScheduleTime[]
-  logs          MedicineLog[]
+  scheduleTimes    MedicineScheduleTime[]
+  logs             MedicineLog[]
+  prescriptionItem PrescriptionItem?
 
   @@index([userId])
   @@index([familyMemberId])
@@ -570,23 +615,26 @@ model BillSubscription {
 }
 
 model Goal {
-  id          String    @id @default(uuid())
-  userId      String
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  type        GoalType
-  title       String
-  description String?
-  targetValue Decimal?  @db.Decimal(12, 2)
-  currentValue Decimal? @db.Decimal(12, 2)
-  unit        String?
-  progress    Int       @default(0) // 0-100
-  milestones  Json?
-  dueDate     DateTime?
-  completedAt DateTime?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id             String        @id @default(uuid())
+  userId         String
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  familyMemberId String?
+  familyMember   FamilyMember? @relation(fields: [familyMemberId], references: [id], onDelete: SetNull)
+  type           GoalType
+  title          String
+  description    String?
+  targetValue    Decimal?      @db.Decimal(12, 2)
+  currentValue   Decimal?      @db.Decimal(12, 2)
+  unit           String?
+  progress       Int           @default(0) // 0-100
+  milestones     Json?
+  dueDate        DateTime?
+  completedAt    DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
 
   @@index([userId])
+  @@index([familyMemberId])
 }
 
 model Notification {
@@ -641,6 +689,7 @@ model File {
   size         Int
   path         String   // Relative or absolute storage path
   url          String?
+  metadata     Json?
   createdAt    DateTime @default(now())
 
   @@index([userId])
